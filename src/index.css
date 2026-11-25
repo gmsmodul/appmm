@@ -1,0 +1,1404 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: #fef1f5;
+  --color-primary-100: #fde0e9;
+  --color-primary-200: #fbc2d4;
+  --color-primary-300: #f895b5;
+  --color-primary-400: #f45d8e;
+  --color-primary-500: #ee2e65;
+  --color-primary-600: #ee2e65;
+  --color-primary-700: #c11448;
+  --color-primary-800: #9d113c;
+  --color-primary-900: #831236;
+  --color-primary-950: #4e051c;
+}
+
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* ==========================================================================
+   375px Mobile & Touch Responsive Foundations
+   1. Big numbers stay one-line, tabular, and size-capped
+   2. Inputs >= 16px below 640px to prevent iOS Safari auto-zoom
+   3. Touch targets >= 44px strictly for coarse pointers (mouse stays dense)
+   4. Bottom bar & content safe-area padding via env(safe-area-inset-bottom)
+   ========================================================================== */
+.kpi-container {
+  container-type: inline-size;
+}
+
+.kpi-value {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.0625rem, 4.8vw, 1.875rem);
+  line-height: 1.15;
+  max-width: 100%;
+}
+
+.kpi-container .kpi-value {
+  font-size: clamp(1.0625rem, 12.5cqi, 1.875rem);
+}
+
+@media (max-width: 639px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not(.no-ios-zoom-guard),
+  textarea:not(.no-ios-zoom-guard),
+  select:not(.no-ios-zoom-guard) {
+    font-size: 16px;
+  }
+}
+
+@media (pointer: coarse) {
+  .touch-target-44,
+  button[aria-haspopup="listbox"],
+  nav[aria-label="UI KIT mobile navigation"] button {
+    min-height: 44px;
+  }
+}
+
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Global Pill Capsule Scrollbars matching Role Permissions Matrix (compact 5px, zero arrow buttons) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*:not(.no-scrollbar)::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+html::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button,
+*:not(.no-scrollbar)::-webkit-scrollbar-button,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:single-button,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:double-button,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:start,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:end,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:decrement,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:increment,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:vertical,
+*:not(.no-scrollbar)::-webkit-scrollbar-button:horizontal {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*:not(.no-scrollbar)::-webkit-scrollbar-track {
+  background: #ede9fe;
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*:not(.no-scrollbar)::-webkit-scrollbar-thumb {
+  background-color: #6852ec;
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*:not(.no-scrollbar)::-webkit-scrollbar-thumb:hover {
+  background-color: #543de2;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*:not(.no-scrollbar)::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Custom Sleek Scrollbar matching sidebar design */
+.custom-sidebar-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-sidebar-scrollbar::-webkit-scrollbar-track {
+  background: #e8eaef;
+  border-radius: 9999px;
+}
+.custom-sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #71737d;
+  border-radius: 9999px;
+}
+.custom-sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #52545f;
+}
+
+.dark html::-webkit-scrollbar-track,
+.dark body::-webkit-scrollbar-track,
+.dark *:not(.no-scrollbar)::-webkit-scrollbar-track {
+  background: #181b21;
+}
+
+.dark html::-webkit-scrollbar-thumb,
+.dark body::-webkit-scrollbar-thumb,
+.dark *:not(.no-scrollbar)::-webkit-scrollbar-thumb {
+  background-color: #363b47;
+}
+
+.dark html::-webkit-scrollbar-thumb:hover,
+.dark body::-webkit-scrollbar-thumb:hover,
+.dark *:not(.no-scrollbar)::-webkit-scrollbar-thumb:hover {
+  background-color: #4b5263;
+}
+
+.dark .custom-sidebar-scrollbar::-webkit-scrollbar-track {
+  background: #15181e;
+}
+
+.dark .custom-sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #363b47;
+}
+
+.dark .custom-sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #4b5263;
+}
+
+/* Hide native scrollbars cleanly for custom slide/scroll indicator tracks */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.slide-indicator-thumb {
+  transition:
+    width 240ms var(--ease-out),
+    background-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    scale 240ms var(--ease-out);
+  will-change: transform, scale, width;
+}
+
+.vertical-scroll-thumb {
+  transition:
+    height 180ms var(--ease-out),
+    background-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    scale 200ms var(--ease-out);
+  will-change: transform, scale, height;
+}
+
+/* Floating Pill Vertical Scrollbar Variants (CSS Utility) */
+.ui-scrollbar-violet::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.ui-scrollbar-violet::-webkit-scrollbar-track {
+  background: #ede9fe;
+  border-radius: 9999px;
+}
+.ui-scrollbar-violet::-webkit-scrollbar-thumb {
+  background-color: #6852ec;
+  border-radius: 9999px;
+}
+.ui-scrollbar-violet::-webkit-scrollbar-thumb:hover {
+  background-color: #543de2;
+}
+
+.ui-scrollbar-rose::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.ui-scrollbar-rose::-webkit-scrollbar-track {
+  background: #fef1f5;
+  border-radius: 9999px;
+}
+.ui-scrollbar-rose::-webkit-scrollbar-thumb {
+  background-color: #ee2e65;
+  border-radius: 9999px;
+}
+.ui-scrollbar-rose::-webkit-scrollbar-thumb:hover {
+  background-color: #c11448;
+}
+
+.ui-scrollbar-dark::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.ui-scrollbar-dark::-webkit-scrollbar-track {
+  background: #eaecef;
+  border-radius: 9999px;
+}
+.ui-scrollbar-dark::-webkit-scrollbar-thumb {
+  background-color: #1c1d21;
+  border-radius: 9999px;
+}
+.ui-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background-color: #000000;
+}
+
+/* Fallback ONLY for engines without ::-webkit-scrollbar (e.g. Firefox) so Chromium keeps pill capsules without triangle arrows */
+@supports not selector(::-webkit-scrollbar) {
+  html,
+  body,
+  *:not(.no-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: #6852ec #ede9fe;
+  }
+  .custom-sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #71737d #e8eaef;
+  }
+  .ui-scrollbar-violet {
+    scrollbar-width: thin;
+    scrollbar-color: #6852ec #ede9fe;
+  }
+  .ui-scrollbar-rose {
+    scrollbar-width: thin;
+    scrollbar-color: #ee2e65 #fef1f5;
+  }
+  .ui-scrollbar-dark {
+    scrollbar-width: thin;
+    scrollbar-color: #1c1d21 #eaecef;
+  }
+}
+
+/* ==========================================================================
+   UI Kit Motion & Micro-Interaction Primitives
+   Fluid exponential deceleration & soft damped springs using compositor-only
+   individual properties (`opacity`, `translate`, `scale`, `filter`) so
+   existing CSS `transform` utilities (-translate-x-1/2, rotate-180, etc.)
+   never collide.
+   ========================================================================== */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-fluid: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes ui-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ui-page {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+    scale: 0.95;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-section-enter {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+    scale: 0.95;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes bottom-sheet-mobile {
+  0% {
+    opacity: 0.35;
+    translate: 0 100%;
+    scale: 0.965;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes bottom-sheet-desktop {
+  0% {
+    opacity: 0;
+    translate: 0 20px;
+    scale: 0.95;
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-sheet-item {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes sheet-handle-settle {
+  0% {
+    opacity: 0.35;
+    scale: 0.52 1;
+  }
+  100% {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+
+@keyframes ui-pop {
+  from {
+    opacity: 0;
+    translate: 0 -6px;
+    scale: 0.95;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-pop-up {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+    scale: 0.95;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes menu-fold-up {
+  0% {
+    opacity: 0;
+    translate: 0 18px;
+    scale: 0.95;
+    filter: blur(3px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes menu-fold-down {
+  0% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    translate: 0 16px;
+    scale: 0.95;
+    filter: blur(3px);
+  }
+}
+
+@keyframes ui-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ui-pop-right {
+  from {
+    opacity: 0;
+    translate: -8px 0;
+    scale: 0.95;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-pop-left {
+  from {
+    opacity: 0;
+    translate: 8px 0;
+    scale: 0.95;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-slide-down {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+    scale: 0.95;
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-drawer-left {
+  from {
+    opacity: 0.15;
+    translate: -44px 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-drawer-right {
+  from {
+    opacity: 0.15;
+    translate: 44px 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-drawer-top {
+  from {
+    opacity: 0.15;
+    translate: 0 -44px;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-drawer-bottom {
+  from {
+    opacity: 0.15;
+    translate: 0 44px;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-check {
+  0% {
+    scale: 0.95;
+    opacity: 0;
+  }
+  65% {
+    scale: 1.06;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes demo-scale-95 {
+  from {
+    opacity: 0;
+    scale: 0.95;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes ui-shake {
+  0%, 100% {
+    translate: 0 0;
+  }
+  20% {
+    translate: -5px 0;
+  }
+  40% {
+    translate: 5px 0;
+  }
+  60% {
+    translate: -3px 0;
+  }
+  80% {
+    translate: 2px 0;
+  }
+}
+
+@keyframes ui-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1.25rem 0;
+  }
+}
+
+@keyframes ui-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.ui-skeleton-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 37%, #f3f4f6 63%);
+  background-size: 200% 100%;
+  animation: ui-shimmer 1.35s var(--ease-out) infinite;
+}
+
+.dark .ui-skeleton-shimmer {
+  background: linear-gradient(90deg, #1b1e24 25%, #262b34 37%, #1b1e24 63%);
+  background-size: 200% 100%;
+}
+
+/* ==========================================================================
+   20 Creative Loading Animations Keyframes (loader/*)
+   ========================================================================== */
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes loader-elastic-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes loader-morph-blob {
+  0%, 100% {
+    border-radius: 50%;
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    border-radius: 28% 72% 70% 30% / 30% 35% 65% 70%;
+    transform: rotate(90deg) scale(1.06);
+  }
+  50% {
+    border-radius: 22%;
+    transform: rotate(180deg) scale(0.92);
+  }
+  75% {
+    border-radius: 70% 30% 30% 70% / 65% 40% 60% 35%;
+    transform: rotate(270deg) scale(1.05);
+  }
+}
+
+@keyframes loader-newton-left {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(38deg);
+  }
+}
+
+@keyframes loader-newton-right {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-38deg);
+  }
+}
+
+@keyframes loader-ripple {
+  0% {
+    transform: scale(0.18);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes loader-bounce-trio {
+  0%, 80%, 100% {
+    transform: translateY(0) scale(0.88);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-10px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-eq-bar {
+  0%, 100% {
+    transform: scaleY(0.32);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-cube-flip {
+  0% {
+    transform: perspective(140px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(140px) rotateX(-180deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(140px) rotateX(-180deg) rotateY(-180deg);
+  }
+}
+
+@keyframes loader-infinity-dash {
+  to {
+    stroke-dashoffset: -176;
+  }
+}
+
+@keyframes loader-sliding-pill {
+  0% {
+    transform: translateX(-110%);
+  }
+  50% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(-110%);
+  }
+}
+
+@keyframes loader-typing-wave {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-square-chase-a {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(18px, 0);
+  }
+  50% {
+    transform: translate(18px, 18px);
+  }
+  75% {
+    transform: translate(0, 18px);
+  }
+}
+
+@keyframes loader-square-chase-b {
+  0%, 100% {
+    transform: translate(18px, 18px);
+  }
+  25% {
+    transform: translate(0, 18px);
+  }
+  50% {
+    transform: translate(0, 0);
+  }
+  75% {
+    transform: translate(18px, 0);
+  }
+}
+
+@keyframes loader-hourglass {
+  0% {
+    transform: rotate(0deg);
+  }
+  45%, 50% {
+    transform: rotate(180deg);
+  }
+  95%, 100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-helix-top {
+  0%, 100% {
+    transform: translateY(-8px) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px) scale(0.62);
+    opacity: 0.38;
+  }
+}
+
+@keyframes loader-helix-bottom {
+  0%, 100% {
+    transform: translateY(8px) scale(0.62);
+    opacity: 0.38;
+  }
+  50% {
+    transform: translateY(-8px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-grid-matrix {
+  0%, 70%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  35% {
+    transform: scale(0.38);
+    opacity: 0.3;
+  }
+}
+
+@keyframes loader-radar-fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.14;
+  }
+}
+
+@keyframes loader-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.15;
+  }
+}
+
+.animate-ui-fade {
+  animation: ui-fade 200ms var(--ease-out) both;
+}
+
+.animate-ui-fade-out {
+  animation: ui-fade-out 160ms var(--ease-out) both;
+  pointer-events: none;
+}
+
+.animate-menu-fold-up {
+  transform-origin: bottom left;
+  animation: menu-fold-up 240ms var(--ease-out) both;
+  will-change: transform, translate, scale, opacity;
+}
+
+.animate-menu-fold-up > * {
+  animation: ui-sheet-item 200ms var(--ease-out) both;
+}
+.animate-menu-fold-up > *:nth-child(2) {
+  animation-delay: 45ms;
+}
+
+.animate-menu-fold-down {
+  transform-origin: bottom left;
+  animation: menu-fold-down 180ms var(--ease-out) both;
+  pointer-events: none;
+}
+
+.animate-ui-page {
+  animation: ui-page 100ms var(--ease-out) both;
+}
+
+.animate-bottom-sheet {
+  animation: bottom-sheet-mobile 260ms var(--ease-out) both;
+  will-change: transform, translate, opacity;
+}
+
+@media (min-width: 640px) {
+  .animate-bottom-sheet {
+    animation: bottom-sheet-desktop 240ms var(--ease-out) both;
+  }
+}
+
+.animate-modal-sheet {
+  animation: bottom-sheet-desktop 240ms var(--ease-out) both;
+  will-change: transform, translate, opacity;
+}
+
+.animate-bottom-sheet > *:not([data-sheet-handle="true"]),
+.animate-modal-sheet > *:not([data-sheet-handle="true"]) {
+  animation: ui-sheet-item 200ms var(--ease-out) both;
+}
+.animate-bottom-sheet > *:nth-child(2):not([data-sheet-handle="true"]),
+.animate-modal-sheet > *:nth-child(2):not([data-sheet-handle="true"]) {
+  animation-delay: 45ms;
+}
+.animate-bottom-sheet > *:nth-child(3):not([data-sheet-handle="true"]),
+.animate-modal-sheet > *:nth-child(3):not([data-sheet-handle="true"]) {
+  animation-delay: 90ms;
+}
+.animate-bottom-sheet > *:nth-child(4):not([data-sheet-handle="true"]),
+.animate-modal-sheet > *:nth-child(4):not([data-sheet-handle="true"]) {
+  animation-delay: 135ms;
+}
+.animate-bottom-sheet > *:nth-child(n + 5):not([data-sheet-handle="true"]),
+.animate-modal-sheet > *:nth-child(n + 5):not([data-sheet-handle="true"]) {
+  animation-delay: 180ms;
+}
+
+/* Modal sheet background depth pull-back */
+.app-shell-container {
+  transition: scale 280ms var(--ease-out), filter 260ms var(--ease-out);
+  transform-origin: center top;
+}
+
+body:has([data-modal-sheet-backdrop="true"]:not([data-closing="true"])) .app-shell-container {
+  scale: 0.982;
+  filter: brightness(0.96);
+}
+
+.animate-sheet-handle {
+  animation: sheet-handle-settle 240ms 50ms var(--ease-out) both;
+}
+
+.animate-ui-pop {
+  animation: ui-pop 180ms var(--ease-out) both;
+}
+
+.animate-ui-pop-up {
+  animation: ui-pop-up 180ms var(--ease-out) both;
+}
+
+.animate-ui-pop-right {
+  animation: ui-pop-right 180ms var(--ease-out) both;
+}
+
+.animate-ui-pop-left {
+  animation: ui-pop-left 180ms var(--ease-out) both;
+}
+
+.animate-ui-slide-down {
+  animation: ui-slide-down 200ms var(--ease-out) both;
+}
+
+.animate-ui-toast,
+.animate-fade-in {
+  animation: ui-toast-in 240ms var(--ease-out) both;
+}
+
+.animate-ui-drawer-left {
+  animation: ui-drawer-left 260ms var(--ease-out) both;
+}
+
+.animate-ui-drawer-right {
+  animation: ui-drawer-right 260ms var(--ease-out) both;
+}
+
+.animate-ui-drawer-top {
+  animation: ui-drawer-top 260ms var(--ease-out) both;
+}
+
+.animate-ui-drawer-bottom {
+  animation: bottom-sheet-mobile 280ms var(--ease-out) both;
+  will-change: transform, translate, opacity;
+}
+
+.animate-ui-check {
+  animation: ui-check 200ms var(--ease-out) both;
+}
+
+.animate-ui-shake {
+  animation: ui-shake 260ms var(--ease-out) both;
+}
+
+.animate-ui-stripes {
+  animation: ui-stripes 0.85s linear infinite;
+}
+
+@keyframes wayground-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes wayground-aurora-drift {
+  0% {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate3d(-2%, 4%, 0) scale(0.98);
+    opacity: 0.75;
+  }
+}
+
+.animate-wayground-gradient {
+  background-size: 240% 240%;
+  animation: wayground-gradient-flow 16s ease-in-out infinite;
+}
+
+.animate-wayground-aurora {
+  animation: wayground-aurora-drift 18s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+/* Staggered Section Cascade (+10ms/section, 100ms entrance) with Sensory Blur & scale(0.95) */
+.ui-stagger > * {
+  animation: ui-section-enter 100ms var(--ease-out) both;
+}
+.ui-stagger > *:nth-child(2) {
+  animation-delay: 10ms;
+}
+.ui-stagger > *:nth-child(3) {
+  animation-delay: 20ms;
+}
+.ui-stagger > *:nth-child(4) {
+  animation-delay: 30ms;
+}
+.ui-stagger > *:nth-child(5) {
+  animation-delay: 40ms;
+}
+.ui-stagger > *:nth-child(6) {
+  animation-delay: 50ms;
+}
+.ui-stagger > *:nth-child(7) {
+  animation-delay: 60ms;
+}
+.ui-stagger > *:nth-child(8) {
+  animation-delay: 70ms;
+}
+.ui-stagger > *:nth-child(n + 9) {
+  animation-delay: 80ms;
+}
+
+/* Global Baseline Silky Motion & Zero-Jump Tactile Press (Emil Kowalski 200ms ease-out) */
+#root button,
+#root [role="button"],
+#root a[href],
+#root summary,
+.ui-kit-root button,
+.ui-kit-root [role="button"],
+.ui-kit-root a[href],
+.ui-kit-root summary {
+  transition-property: color, background-color, border-color, box-shadow, opacity, scale, translate, transform, filter;
+  transition-duration: 200ms;
+  transition-timing-function: var(--ease-out);
+}
+
+#root button:not(:disabled):not(.no-press):active,
+#root [role="button"]:not([aria-disabled="true"]):not(.no-press):active,
+#root a[href]:not(.no-press):active,
+.ui-kit-root button:not(:disabled):not(.no-press):active,
+.ui-kit-root [role="button"]:not([aria-disabled="true"]):not(.no-press):active,
+.ui-kit-root a[href]:not(.no-press):active {
+  scale: 0.97;
+  transition-duration: 85ms;
+}
+
+.ui-kit-root input[type="checkbox"]:not(:disabled),
+.ui-kit-root input[type="radio"]:not(:disabled) {
+  transition: transform 180ms var(--ease-out), scale 180ms var(--ease-out), accent-color 180ms var(--ease-out);
+}
+
+.ui-kit-root input[type="checkbox"]:not(:disabled):active,
+.ui-kit-root input[type="radio"]:not(:disabled):active {
+  scale: 0.95;
+  transition-duration: 80ms;
+}
+
+.ui-kit-root input[type="checkbox"]:not(:disabled):checked,
+.ui-kit-root input[type="radio"]:not(:disabled):checked {
+  animation: ui-check 200ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ui-fade,
+  .animate-ui-fade-out,
+  .animate-menu-fold-up,
+  .animate-menu-fold-up > *,
+  .animate-menu-fold-down,
+  .animate-ui-page,
+  .animate-bottom-sheet,
+  .animate-modal-sheet,
+  .animate-bottom-sheet > *,
+  .animate-modal-sheet > *,
+  .animate-sheet-handle,
+  .animate-ui-pop,
+  .animate-ui-pop-up,
+  .animate-ui-pop-right,
+  .animate-ui-pop-left,
+  .animate-ui-slide-down,
+  .animate-ui-toast,
+  .animate-fade-in,
+  .animate-ui-drawer-left,
+  .animate-ui-drawer-right,
+  .animate-ui-drawer-top,
+  .animate-ui-drawer-bottom,
+  .animate-ui-check,
+  .animate-ui-shake,
+  .animate-ui-stripes,
+  .animate-wayground-gradient,
+  .animate-wayground-aurora,
+  .ui-skeleton-shimmer,
+  .ui-stagger > * {
+    animation: none !important;
+    filter: none !important;
+  }
+
+  .app-shell-container,
+  body:has([data-modal-sheet-backdrop="true"]:not([data-closing="true"])) .app-shell-container,
+  .slide-indicator-thumb {
+    transition: none !important;
+    scale: 1 !important;
+    filter: none !important;
+  }
+
+  #root *,
+  #root *::before,
+  #root *::after,
+  .ui-kit-root *,
+  .ui-kit-root *::before,
+  .ui-kit-root *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
+  }
+  body {
+    background: #FFFFFF !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  aside,
+  header,
+  .no-print {
+    display: none !important;
+  }
+  main {
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+  .print-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 18px;
+  }
+}
+
+/* ==========================================================================
+   UI-KIT Obsidian Dark Theme Layer (Base #121418 / Elevated #15181E & #1B1E24)
+   Applies across the entire Servolution workspace, UI KIT showcases, popovers,
+   and modals while respecting explicit dark:* utilities and [data-dark-preserve="true"].
+   ========================================================================== */
+.dark body {
+  background-color: #0b0d10;
+  color: #f3f4f6;
+}
+
+.dark body:has([data-modal-sheet-backdrop="true"]:not([data-closing="true"])) .app-shell-container {
+  filter: brightness(0.88);
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .bg-white,
+  .bg-white\/95,
+  .bg-white\/90,
+  .bg-white\/85,
+  .bg-white\/80,
+  .bg-white\/75,
+  .bg-white\/70
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #15181e;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .bg-gray-50,
+  .bg-gray-50\/70,
+  .bg-gray-50\/80,
+  .bg-gray-50\/50,
+  .bg-slate-50,
+  .bg-\[\#FAFBFD\],
+  .bg-\[\#FAFBFD\]\/60,
+  .bg-\[\#FAFBFD\]\/70,
+  .bg-\[\#FAFBFD\]\/80,
+  .bg-\[\#F8F9FC\]
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #181b21;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .bg-gray-100,
+  .bg-gray-100\/80,
+  .bg-gray-100\/90,
+  .bg-gray-100\/70,
+  .bg-gray-200,
+  .bg-gray-200\/70,
+  .bg-slate-100,
+  .bg-\[\#F4F5F8\],
+  .bg-\[\#F1F2F6\]
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #1b1e24;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .bg-\[\#FEF1F5\],
+  .bg-\[\#FEF1F5\]\/90,
+  .bg-\[\#FEF1F5\]\/80,
+  .bg-\[\#FEF1F5\]\/60,
+  .bg-primary-50,
+  .bg-primary-50\/60
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: rgba(238, 46, 101, 0.14);
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .bg-\[\#F0EFFC\],
+  .bg-\[\#F0EFFC\]\/80,
+  .bg-\[\#F0EFFC\]\/70,
+  .bg-\[\#E6F9F0\],
+  .bg-\[\#E6F9F0\]\/80,
+  .bg-\[\#E6F9F0\]\/70,
+  .bg-\[\#FFF5E6\],
+  .bg-\[\#FFF5E6\]\/80,
+  .bg-\[\#FFF5E6\]\/70,
+  .bg-\[\#FFECEB\],
+  .bg-\[\#ECF8F2\]
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #1b1e24;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .border-gray-100,
+  .border-gray-200,
+  .border-gray-200\/80,
+  .border-gray-300,
+  .border-gray-300\/90,
+  .border-gray-300\/85,
+  .border-slate-200,
+  .border-black\/\[0\.14\],
+  .border-black\/\[0\.12\],
+  .border-black\/\[0\.10\],
+  .border-black\/\[0\.09\],
+  .border-black\/\[0\.08\],
+  .border-black\/\[0\.07\],
+  .border-black\/\[0\.06\],
+  .border-black\/\[0\.05\]
+):not([class*="dark:border-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .divide-gray-100,
+  .divide-gray-200,
+  .divide-gray-300,
+  .divide-black\/\[0\.08\],
+  .divide-black\/\[0\.07\],
+  .divide-black\/\[0\.06\],
+  .divide-black\/\[0\.05\]
+):not([class*="dark:divide-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) > :not(:last-child) {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-gray-950,
+  .text-gray-900,
+  .text-slate-900,
+  .text-\[\#1C1D21\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #f3f4f6;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-gray-800,
+  .text-gray-700,
+  .text-slate-700,
+  .text-slate-800,
+  .text-\[\#434652\],
+  .text-\[\#4B4E57\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #d1d5db;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-gray-600,
+  .text-gray-500,
+  .text-gray-400,
+  .text-slate-500,
+  .text-\[\#5A5D67\],
+  .text-\[\#646772\],
+  .text-\[\#6E717A\],
+  .text-\[\#8A8D98\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #9ca3af;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-\[\#9D113C\],
+  .text-primary-800,
+  .text-primary-700
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #fbc2d4;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-\[\#3F3B99\],
+  .text-\[\#5854A8\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #c4b5fd;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-\[\#146C43\],
+  .text-\[\#35684E\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #6ee7b7;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .text-\[\#8C5811\]
+):not([class*="dark:text-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #fcd34d;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  textarea,
+  select
+):not([class*="dark:bg-"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #181b21;
+  color: #f3f4f6;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  textarea
+)::placeholder {
+  color: #6b7280;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .hover\:bg-gray-50,
+  .hover\:bg-gray-50\/80,
+  .hover\:bg-gray-100,
+  .hover\:bg-gray-100\/90,
+  .hover\:bg-\[\#FAFBFD\],
+  .hover\:bg-\[\#F4F5F8\]
+):hover:not([class*="dark:hover:"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  background-color: #22262e;
+}
+
+.dark :is(.app-shell-container, .ui-kit-root, [data-modal-sheet-backdrop="true"], [data-ui-popover="true"]) :is(
+  .hover\:text-gray-900,
+  .hover\:text-\[\#1C1D21\]
+):hover:not([class*="dark:hover:"]):not([data-dark-preserve="true"]):not([data-dark-preserve="true"] *) {
+  color: #ffffff;
+}
+
+
